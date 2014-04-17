@@ -1,4 +1,4 @@
-### Changes made to original rMaps Package
+# Changes made to original rMaps Package
 
 ##ichoropleth function
 
@@ -15,5 +15,5 @@ names(y) = x[,fml$right.name]
 4. Projection changed to Mercator
 
 
-
-All of above could/should be achieved using map$set. Working on same.
+======
+###All of above could/should be achieved using map$set. Working on same.
