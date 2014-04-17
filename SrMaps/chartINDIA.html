@@ -1,0 +1,70 @@
+<script id='popup-template' type='text/x-handlebars-template'>
+{{{ popup_template }}}  
+</script>
+  <script>
+  var chartParams = {{{ chartParams }}}
+chartParams.element = document.getElementById('{{chartId}}')
+
+{{# popup_template }}
+  var tmplFn =  Handlebars.compile(
+    document.getElementById("popup-template").innerHTML
+  );
+  var popupFn = function(geography, data) {
+    return tmplFn({geography: geography, data: data});
+  }
+  if (chartParams.geographyConfig){
+    chartParams.geographyConfig.popupTemplate = popupFn
+  } else {
+    chartParams.geographyConfig = {"popupTemplate": popupFn}
+  }
+{{/ popup_template }}
+
+
+
+
+var map{{chartId}} = new Datamap({
+        element: chartParams.element,
+        geographyConfig: {
+            dataUrl: '/files/Projs/SrMaps/R/india.topojson'
+        },
+        scope: chartParams.scope,
+        setProjection: function(element, options) {
+            var projection = d3.geo.mercator()
+                          .center([82.166667, 24.4444])
+                          .scale(element.offsetWidth)
+                          .scale(element.offsetHeight)
+                          .translate([element.offsetWidth / 2, element.offsetHeight / 2]);
+                        
+            path = d3.geo.path()
+                .projection( projection );
+
+            return {path: path, projection: projection};
+        },
+        data: chartParams.data,
+        fills: chartParams.fills,
+        newData: chartParams.newData
+    });
+
+
+// draw a bubble map if specified
+if (chartParams.bubbles) {
+  var bubbles = chartParams.bubbles
+  map{{chartId}}.bubbles(bubbles)
+}
+
+if (chartParams.labels){
+  map{{chartId}}.labels()
+}
+
+if (chartParams.legend){
+  map{{chartId}}.legend()
+}
+
+
+</script>
+  
+  <style>
+  .datamaps {
+    position: relative;
+  }
+</style>
