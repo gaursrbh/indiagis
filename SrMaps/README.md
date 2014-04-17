@@ -1,4 +1,4 @@
-# Changes made to original rMaps Package
+## Changes made to original rMaps Package
 
 ##ichoropleth function
 
